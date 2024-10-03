@@ -77,6 +77,13 @@ public:
         while (head) {
             Process* current = head;
             cout << "\nCycle " << cycleCount++ << ":\n";
+
+                //* OPTIONAL TASK
+                if (cycleCount == 4) {
+                    cout << "NEW PROCESS ADDED: P5(6)\n";
+                    addProcess("P5", 6); // Letting a new process come in during the third cycle
+                }
+
                 do {
                     if (!head) { // No more processes
                         break; // End the processing cycle
@@ -113,7 +120,3 @@ int main() {
     scheduler.addProcess("P4", 12);
     scheduler.processing();
 }
-
-//TODO Optional Task
-//TODO possibly add the P2 going in negative in the readme
-//TODO add the else converting to an if in the readme
