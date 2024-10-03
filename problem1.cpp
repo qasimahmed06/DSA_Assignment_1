@@ -67,11 +67,40 @@ public:
             }
             delete remove;
         }
+    }
+    
+    //* Actual logic starts now
+    void processing() {
+        int cycleCount = 0;
+        Process* current = head;
+        while (head) {
+            cout << "Cycle " << cycleCount++ << ": Running process " << current->processID << " with remaining time " << current->remainingTime << endl;
+            current->remainingTime -= timePerCycle;
+            if (current->remainingTime <= 0) {
+                cout << "Process " << current->processID << " completed" << endl;
+                removeProcess(current);
+            }
+            current = current->next;
+        }
+        cout << "Cycle " << cycleCount++ << ": Running process " << current->processID << " with remaining time " << current->remainingTime << endl;
+        current->remainingTime -= timePerCycle;
+        if (current->remainingTime <= 0) {
+            cout << "Process " << current->processID << " completed" << endl;
+            removeProcess(current);
+        }
+    }
 
+};
+
+//* Not satisfied with output yet
+//! P2 IS GOING IN NEGATIVE
+int main() {
+    ProcessScheduler scheduler(3); // 2 units of CPU time per cycle
+    scheduler.addProcess("P1", 5);
+    scheduler.addProcess("P2", 7);
+    scheduler.addProcess("P3", 3);
+    scheduler.processing();
 }
 
-//TODO remaining_time will be reduced by that amount.
-//TODO remaining_time becomes 0
-//TODO process is running and its remaining time.
 //TODO Show the state of the system after each cycle.
 //TODO Optional Task
