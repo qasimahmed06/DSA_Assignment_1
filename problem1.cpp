@@ -104,3 +104,4 @@ int main() {
 
 //TODO Show the state of the system after each cycle.
 //TODO Optional Task
+//TODO possibly add the P2 going in negative in the readme
