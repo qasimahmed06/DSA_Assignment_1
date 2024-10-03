@@ -19,7 +19,7 @@ class ProcessScheduler {
 private:
     Process* head;
     Process* tail;
-    int timePerCycle; // Fixed amount of CPU time to each process in each cycle
+    int timePerCycle; // Fixed amount of CPU time for each process in each cycle
 
 public:
     ProcessScheduler(int cpu) {
@@ -73,32 +73,35 @@ public:
     void processing() {
         cout << "\n"; // Pretty printing
         int cycleCount = 1;
-        Process* current = head;
+
         while (head) {
-            cout << "Cycle " << cycleCount << ": Running process " << current->processID 
-                 << " with remaining time " << current->remainingTime << endl;
+            Process* current = head;
+            cout << "\nCycle " << cycleCount++ << ":\n";
+                do {
+                    if (!head) { // No more processes
+                        break; // End the processing cycle
+                    }
 
-            if (current->remainingTime <= timePerCycle) { // If the process will complete in the next cycle
-                cout << "Process " << current->processID << " completed.\n\n";
-                Process* toDelete = current;
-                current = current->next;
+                    // If the process will complete in the next cycle
+                    if (current->remainingTime <= timePerCycle) {                        
+                        cout << "Process " << current->processID << " completed.\n";
+                        Process* toDelete = current;
+                        current = current->next;   // Move to the next process before deletion
+                        removeProcess(toDelete);   // Remove the current process
+                    }
+                    
+                     // If the process will NOT complete in the next cycle
+                    if (current->remainingTime > timePerCycle) {
+                        current->remainingTime -= timePerCycle;
+                        cout << "Process " << current->processID 
+                            << " remaining time: "
+                            << current->remainingTime << "\n";
+                        current = current->next; // Move to the next process
+                    }
 
-                removeProcess(toDelete);
-                
-                if (!head) { // No more processes 
-                    break; // End the processing cycle
-                }
-
-            }
-            else {
-                current->remainingTime -= timePerCycle;
-                cout << "Process " << current->processID << " has remaining time "
-                     << current->remainingTime << "\n\n";
-                current = current->next;
-            }
-
-            cycleCount++;
+                } while (current != head); // Loop at least once
         }
+        cout << "\nAll processes completed!\n\n"; // Final message
     }
 };
 
@@ -113,3 +116,4 @@ int main() {
 
 //TODO Optional Task
 //TODO possibly add the P2 going in negative in the readme
+//TODO add the else converting to an if in the readme
