@@ -57,7 +57,7 @@ public:
             }
         }
         else {
-            Process* current = head; //! NOT SURE IF THIS WHOLE BLOCK IS CORRECT
+            Process* current = head;
             while (current->next!= remove) {
                 current = current->next;
             }
@@ -65,43 +65,51 @@ public:
             if (remove == tail) {
                 tail = current;
             }
-            delete remove;
+            delete remove; // Good memory management
         }
     }
     
-    //* Actual logic starts now
+    // CPU scheduler
     void processing() {
-        int cycleCount = 0;
+        cout << "\n"; // Pretty printing
+        int cycleCount = 1;
         Process* current = head;
         while (head) {
-            cout << "Cycle " << cycleCount++ << ": Running process " << current->processID << " with remaining time " << current->remainingTime << endl;
-            current->remainingTime -= timePerCycle;
-            if (current->remainingTime <= 0) {
-                cout << "Process " << current->processID << " completed" << endl;
-                removeProcess(current);
+            cout << "Cycle " << cycleCount << ": Running process " << current->processID 
+                 << " with remaining time " << current->remainingTime << endl;
+
+            if (current->remainingTime <= timePerCycle) { // If the process will complete in the next cycle
+                cout << "Process " << current->processID << " completed.\n\n";
+                Process* toDelete = current;
+                current = current->next;
+
+                removeProcess(toDelete);
+                
+                if (!head) { // No more processes 
+                    break; // End the processing cycle
+                }
+
             }
-            current = current->next;
-        }
-        cout << "Cycle " << cycleCount++ << ": Running process " << current->processID << " with remaining time " << current->remainingTime << endl;
-        current->remainingTime -= timePerCycle;
-        if (current->remainingTime <= 0) {
-            cout << "Process " << current->processID << " completed" << endl;
-            removeProcess(current);
+            else {
+                current->remainingTime -= timePerCycle;
+                cout << "Process " << current->processID << " has remaining time "
+                     << current->remainingTime << "\n\n";
+                current = current->next;
+            }
+
+            cycleCount++;
         }
     }
-
 };
 
-//* Not satisfied with output yet
-//! P2 IS GOING IN NEGATIVE
 int main() {
-    ProcessScheduler scheduler(3); // 2 units of CPU time per cycle
+    ProcessScheduler scheduler(2); // CPU "clock speed"
     scheduler.addProcess("P1", 5);
     scheduler.addProcess("P2", 7);
     scheduler.addProcess("P3", 3);
+    scheduler.addProcess("P4", 12);
     scheduler.processing();
 }
 
-//TODO Show the state of the system after each cycle.
 //TODO Optional Task
 //TODO possibly add the P2 going in negative in the readme
