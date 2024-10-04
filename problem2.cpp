@@ -2,10 +2,10 @@
 using namespace std;
 
 struct Node { // Definining a structure to represent a 32-bit section of the number
-    long data;
+    unsigned long data;
     Node* next;
 
-    Node(long value) { // Constructor for the structure
+    Node(unsigned long value) { // Constructor for the structure
         data = value;
         next = nullptr;
     }
@@ -24,7 +24,7 @@ public:
         nodeCount = 0;
     }
 
-    void append(long value) {
+    void append(unsigned long value) {
         Node* newNode = new Node(value);
         if (!head) {
             head = tail = newNode;
@@ -36,9 +36,9 @@ public:
         nodeCount++;
     }
 
-    long mod(long modFactor) {
+    unsigned long mod(unsigned long modFactor) {
         Node* current = head;
-        long result = 0;
+        unsigned long result = 0;
         while (current) {
             //! USING BINARY SHIFT CAUSES AN ERROR EVEN THOUGH THE PROGRAM RUNS
             result = (result * 4294967296 + current->data) % modFactor; // Shifting bits by 32 
@@ -49,11 +49,21 @@ public:
 };
 
 bool millerRabin(LinkedList &bigNum) {
-    long nMod = bigNum.mod(4294967311); // Closest prime to 2^32 for the modulus
+    unsigned long nMod = bigNum.mod(1000000007); // Large prime number for the modulus
     //* Watch vid on this
+    return true;
 }
 
+int main() {
+    LinkedList checkForPrime;
+    checkForPrime.append(12345);
+    checkForPrime.append(12345);
+    checkForPrime.append(12345);
+
+    bool isPrime = millerRabin(checkForPrime);
+
+}
 
 //TODO Miller-Rabin primality test
-//TODO use long for 32-bit numbers
+//TODO use unsigned long for 32-bit numbers
 //TODO add binary shift error in readme
