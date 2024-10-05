@@ -38,7 +38,7 @@ scheduler.addProcess("P4", 12);
 scheduler.processing();
 ```
 
-![[Pasted image 20241005152951.png]]
+![image](https://github.com/user-attachments/assets/64dcd3db-d5e1-4e4e-a38b-7ff00845834d)
 
 ```
 ProcessScheduler scheduler(4); // CPU "clock speed"
@@ -48,7 +48,7 @@ scheduler.addProcess("P3", 22);
 scheduler.processing();
 ```
 
-![[Pasted image 20241005153240.png]]
+![image](https://github.com/user-attachments/assets/b33b1ee8-1616-40b3-9ecb-0973a5d5fac1)
 
 ## Problem 2
 https://github.com/qasimahmed06/DSA_Assignment_1/blob/final/problem2.cpp
