@@ -52,7 +52,7 @@ scheduler.processing();
 https://github.com/qasimahmed06/DSA_Assignment_1/blob/final/problem2.cpp
 
 ### Approach
-I decided to use a linked list to store our very large number, with each node holding 32 bits of the number. The primality test I used is the [Miller-Rabin primality test]([url](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)).
+I decided to use a linked list to store our very large number, with each node holding 32 bits of the number. The primality test I used is the [Miller-Rabin primality test](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test).
 
 The modulus to be used in this test is supposed to be a large prime number, so I chose 1,000,000,007 as it is a commonly used number in computational problems like this one. To simulate the addition of each node's data to that of the next node, I multiplied the result of the modulus by 4,294,967,296 which is 2^32. This is because it simulates a bit shift of 32 bits.
 
@@ -75,3 +75,16 @@ I made two functions for modular exponentiation and calculated the values of `d`
 	- The program could be modified by including implementation of this for a more universal prime number checker.
 
 ### Output
+```
+checkForPrime.append(1000000009);
+```
+
+![image](https://github.com/user-attachments/assets/12ed27e0-b405-471b-b379-c44d43f8dc96)
+
+```
+checkForPrime.append(1000000009);
+checkForPrime.append(3498136401);
+checkForPrime.append(2345612371);
+```
+
+![image](https://github.com/user-attachments/assets/de83b29a-51a4-4042-9bc0-2610ba5eecfd)
