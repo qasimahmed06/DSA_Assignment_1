@@ -54,7 +54,7 @@ https://github.com/qasimahmed06/DSA_Assignment_1/blob/final/problem2.cpp
 ### Approach
 I decided to use a linked list to store our very large number, with each node holding 32 bits of the number. The primality test I used is the [Miller-Rabin primality test]([url](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)).
 
-The modulus to be used in this test is supposed to be a large prime number, so I chose $1,000,000,007$ as it is a commonly used number in computational problems like this one. To simulate the addition of each node's data to that of the next node, I multiplied the result of the modulus by $4,294,967,296$ which is $2^32$. This is because it simulates a bit shift of 32 bits.
+The modulus to be used in this test is supposed to be a large prime number, so I chose 1,000,000,007 as it is a commonly used number in computational problems like this one. To simulate the addition of each node's data to that of the next node, I multiplied the result of the modulus by 4,294,967,296 which is 2^32. This is because it simulates a bit shift of 32 bits.
 
 I made two functions for modular exponentiation and calculated the values of `d`, `r`, and `a` according to the given formulae. Finally, I made a main function to enter a very large number to check if it is prime or not using the `append()` function.
 
@@ -62,23 +62,16 @@ I made two functions for modular exponentiation and calculated the values of `d`
 - There can be no negative numbers in any node of the linked list.
 
 ### Challenges faced
-- No node of the linked list can hold a value greater than 4294967295
+- No node of the linked list can hold a value greater than 4,294,967,295.
+- I had to use `unsigned long` instead of `long`.
+	- This is because a `long` holds negative values as well.
+	- As we assumed there will be no negative values in our list, we used an `unsigned long`.
+ 	- This gives us double the positive values that can be used.
 - Writing this README was a challenge in and of itself.
 - `1ULL` for binary shift was giving an error.
 	- This was due to type limitations.
  	- I fixed this by multiplying with 2^32
+- My program does not have a way to tell if a number less than 1,000,000,007 is prime.
+	- The program could be modified by including implementation of this for a more universal prime number checker.
 
 ### Output
-
-
-
-
-//TODO add unsigned long for 2^32 instead of 2^16
-					Type Name	Bytes	Range of Values
-					long	4	-2,147,483,648 to 2,147,483,647
-					unsigned long	4	0 to 4,294,967,295
-
-
-
-
-//TODO add that can't tell if prime below [find yourself] but could modif prgram to include more implementation of smaller primes for a more universal prime number checker
