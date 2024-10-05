@@ -46,24 +46,76 @@ public:
         }
         return result;
     }
+
+    unsigned long exponentiation(unsigned long base, unsigned long exp, unsigned long mod) {
+        unsigned long result = 1;
+        base = base % mod;
+        while (exp > 0) {
+            if (exp % 2 == 1) {
+                result = (result * base) % mod;
+            }
+            exp = exp >> 1;
+            base = (base * base) % mod;
+        }
+        return result;
+    }
 };
 
 bool millerRabin(LinkedList &bigNum) {
-    unsigned long nMod = bigNum.mod(1000000007); // Large prime number for the modulus
-    //* Watch vid on this
+    unsigned long mod = bigNum.mod(1000000007); // Large prime number for the modulus
+
+    // Formulae according to the Miller-Rabin algorithm Wikipedia article
+    if (mod <= 1 || mod == 4) {
+        return false;
+    }
+    else if (mod <= 3) {
+        return true;
+    }
+
+    unsigned long d = mod - 1;
+    int r = 0;
+
+    while (d % 2 == 0) {
+        d /= 2;
+        r++;
+    }
+
+    for (int i = 0; i < 5; i++) {
+        unsigned long a = 2 + rand() % (mod - 4);
+        unsigned long x = bigNum.exponentiation(a, d, mod);
+
+        if (x == 1 || x == mod - 1) {
+            continue;
+        }
+
+        bool prime = false;
+        for (int j = 0; j < r - 1; j++) {
+            x = (x * x) % mod;
+            if (x == mod - 1) {
+                prime = true;
+                break;
+            }
+        }
+        if (!prime) {
+            return false;
+        }        
+    }
     return true;
 }
 
 int main() {
     LinkedList checkForPrime;
-    checkForPrime.append(12345);
-    checkForPrime.append(12345);
-    checkForPrime.append(12345);
+    checkForPrime.append(17014118);
+    checkForPrime.append(3460469);
+    checkForPrime.append(23173);
+    checkForPrime.append(1687303715);
+    checkForPrime.append(884105727);
+    //* 4294967295 is the largest possible number that can be added
 
-    bool isPrime = millerRabin(checkForPrime);
-
+    if (millerRabin(checkForPrime)) {
+        cout << "The number is prime";
+    }
+    else {
+        cout << "The number is not prime";
+    }
 }
-
-//TODO Miller-Rabin primality test
-//TODO use unsigned long for 32-bit numbers
-//TODO add binary shift error in readme
